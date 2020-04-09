@@ -1,5 +1,8 @@
 package com.taotao.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.taotao.common.pojo.EUDateGridResult;
 import com.taotao.mapper.TbItemMapper;
 import com.taotao.pojo.TbItem;
 import com.taotao.pojo.TbItemExample;
@@ -27,5 +30,24 @@ public class ItemServiceImpl implements ItemService {
             return tbItem;
         }
         return null;
+    }
+
+    @Override
+    /**
+     *  商品查询列表
+     */
+    public EUDateGridResult getItemList(int page, int rows) {
+        //查询商品列表
+        TbItemExample example = new TbItemExample();
+        //分页处理
+        PageHelper.startPage(page,rows);
+        List<TbItem> list = itemMapper.selectByExample(example);
+        //创建一个返回对象
+        EUDateGridResult result  = new EUDateGridResult();
+        result.setRows(list);
+        //取记录总条数
+        PageInfo<TbItem> pageInfo =  new PageInfo<>(list);
+        result.setTotal(pageInfo.getTotal())    ;
+        return result;
     }
 }
