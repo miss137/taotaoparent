@@ -2,6 +2,9 @@ package com.taotao.common.pojo;
 
 import java.util.List;
 
+/**
+ * 分页查询工具
+ */
 public class EUDateGridResult {
 
     private long total;
@@ -23,7 +26,5 @@ public class EUDateGridResult {
     public void setRows(List<?> rows) {
         this.rows = rows;
     }
-
-
 
 }
