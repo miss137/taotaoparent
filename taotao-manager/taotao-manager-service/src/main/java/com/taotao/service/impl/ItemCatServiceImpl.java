@@ -1,7 +1,7 @@
 package com.taotao.service.impl;
 
 
-import com.taotao.common.pojo.EUTreeNode;
+import com.taotao.common.pojo.TreeNode;
 import com.taotao.mapper.TbItemCatMapper;
 import com.taotao.pojo.TbItemCat;
 import com.taotao.pojo.TbItemCatExample;
@@ -16,23 +16,26 @@ public class ItemCatServiceImpl implements ItemCatService {
 
     @Autowired
     private TbItemCatMapper itemCatMapper;
+
     @Override
-    public List<EUTreeNode> getCatList(long parentId) {
-        //创建查询条件
-        TbItemCatExample example =new TbItemCatExample();
+    public List<TreeNode> getItemCatList(long parentId) {
+        //根据parentId查询分类列表
+        TbItemCatExample example = new TbItemCatExample();
+        //设置查询条件
         TbItemCatExample.Criteria criteria = example.createCriteria();
         criteria.andParentIdEqualTo(parentId);
-        //根据条件查询
+        //执行查询
         List<TbItemCat> list = itemCatMapper.selectByExample(example);
-        List<EUTreeNode> resultList = new ArrayList<>();
-        //把列表转换成treeNodelist
-        for(TbItemCat tbItemCat:list){
-            EUTreeNode node = new EUTreeNode();
-            node.setId(tbItemCat.getId());
-            node.setText(tbItemCat.getName());
-            node.setStatus(tbItemCat.getIsParent()?"closed":"open");
+        //分类列表转换成TreeNode的列表
+        List<TreeNode> resultList = new ArrayList<>();
+        for (TbItemCat tbItemCat : list) {
+            //创建一个TreeNode对象
+            TreeNode node = new TreeNode(tbItemCat.getId(), tbItemCat.getName(),
+                    tbItemCat.getIsParent()?"closed":"open");
             resultList.add(node);
         }
+
         return resultList;
     }
+
 }

@@ -1,6 +1,6 @@
 package com.taotao.controller;
 
-import com.taotao.common.pojo.EUTreeNode;
+import com.taotao.common.pojo.TreeNode;
 import com.taotao.service.ItemCatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +21,8 @@ public class ItemCatController {
 
     @RequestMapping("/list")
     @ResponseBody
-    public List<EUTreeNode> getCatList(@RequestParam(value = "id",defaultValue = "0")Long parentId){
-        List<EUTreeNode> list = itemCatService.getCatList(parentId);
+    public List<TreeNode> getCatList(@RequestParam(value = "id",defaultValue = "0")Long parentId){
+        List<TreeNode> list = itemCatService.getItemCatList(parentId);
         return list;
     }
 }
